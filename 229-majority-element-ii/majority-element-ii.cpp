@@ -1,17 +1,50 @@
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
-        unordered_map<int,int> mpp;
-        vector <int> c;
-        int mini = (nums.size()/3) +1;
+        int cnt1 = 0;
+        int cnt2 = 0;
+        int el1 = INT_MIN;
+        int el2 = INT_MIN;
+        vector<int> c;
         for(int i = 0;i < nums.size();i++) {
-            mpp[nums[i]]++;
-            if(mpp[nums[i]] == mini) {
-                c.push_back(nums[i]);
+            if(cnt1 == 0 && nums[i] != el2) {
+                cnt1 = 1;
+                el1 = nums[i];
             }
-
+            else if(cnt2 == 0 && nums[i] != el1) {
+                cnt2 = 1;
+                el2 = nums[i];
+            }
+            else if (el1 == nums[i] ) {
+                cnt1++;
+            }
+            else if(el2 == nums[i] ) {
+                cnt2++;
+            }
+            else {
+                cnt1--;
+                cnt2--;
+            }
         }
-        
+        cnt1 = 0;
+        cnt2 = 0;
+        for(int i = 0;i < nums.size();i++) {
+            if(nums[i] == el1) {
+                cnt1++;
+                
+            }
+            if(nums[i] == el2) {
+                cnt2++;
+                
+            }
+        }
+        if(cnt1 > nums.size()/3) {
+                    c.push_back(el1);
+                }
+        if(cnt2 > nums.size()/3) {
+                    c.push_back(el2);
+                }
         return c;
+
     }
 };
